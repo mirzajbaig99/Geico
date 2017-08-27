@@ -276,6 +276,36 @@ namespace GeicoLevelOneWorkshopTest
         }
 
         [TestMethod]
+        public void AddFriendContactEmptyTaxIDTest()
+        {
+            // Arrange
+            IRepAddressBook rep = new RepAddressBook();
+            FakeConsoleInterface fakeConsole = new FakeConsoleInterface(
+                new List<string>
+                {
+                    "1",
+                    "3",
+                    "",
+                    "",
+                    "1",
+                    "Name 1",
+                    "Address 1",
+                    "1243545462",
+                    "01/01/1999",
+                    "email",
+                    "",
+                    "5" });
+            AddressBookService target = new AddressBookService(fakeConsole, rep);
+
+            // act
+            target.Start();
+
+            // asset
+            Assert.IsNotNull(rep.SearchByTaxID("1"));
+            StringAssert.Contains(fakeConsole.Output, Constants.Messages.SuccessfullyAdded);
+        }
+
+        [TestMethod]
         public void AddFriendContactTestSuccess()
         {
             // Arrange
